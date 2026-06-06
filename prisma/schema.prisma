@@ -1,0 +1,89 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String         @id @default(cuid())
+  name          String
+  email         String         @unique
+  passwordHash  String
+  image         String?
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  reviews       Review[]
+  savedColleges SavedCollege[]
+}
+
+model College {
+  id            String         @id @default(cuid())
+  name          String
+  slug          String         @unique
+  city          String
+  state         String
+  location      String
+  type          String
+  established   Int
+  overview      String
+  website       String
+  feesMin       Int
+  feesMax       Int
+  rating        Float
+  placementRate Float
+  avgPackage    Float
+  highestPackage Float
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  courses       Course[]
+  reviews       Review[]
+  savedBy       SavedCollege[]
+
+  @@index([name])
+  @@index([state])
+  @@index([feesMin, feesMax])
+  @@index([rating])
+}
+
+model Course {
+  id        String   @id @default(cuid())
+  collegeId String
+  name      String
+  degree    String
+  duration  String
+  fees      Int
+  seats     Int
+  college   College  @relation(fields: [collegeId], references: [id], onDelete: Cascade)
+
+  @@index([collegeId])
+}
+
+model Review {
+  id        String   @id @default(cuid())
+  collegeId String
+  userId    String
+  rating    Int
+  title     String
+  body      String
+  createdAt DateTime @default(now())
+  college   College  @relation(fields: [collegeId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([collegeId])
+  @@index([userId])
+}
+
+model SavedCollege {
+  id        String   @id @default(cuid())
+  userId    String
+  collegeId String
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  college   College  @relation(fields: [collegeId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, collegeId])
+  @@index([collegeId])
+}
