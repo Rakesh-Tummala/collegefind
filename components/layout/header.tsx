@@ -13,7 +13,7 @@ export function Header() {
       <div className="mx-auto flex h-[72px] max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
         <Link href="/" className="flex items-center gap-2 font-semibold">
           <span className="flex h-9 w-9 items-center justify-center rounded-md bg-primary text-white"><Search className="h-5 w-5" /></span>
-          <span>Rakesh's Demo work</span>
+          <span>CollegeFind</span>
         </Link>
         <nav className="flex items-center gap-2">
           <Button asChild href="/compare" variant="ghost" className="px-2 sm:px-3"><GitCompare className="h-4 w-4" /><span className="hidden sm:inline">Compare</span></Button>
