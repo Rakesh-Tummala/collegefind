@@ -1,6 +1,6 @@
 # College Discovery Platform
 
-Production-ready Track B internship assignment built with Next.js 15 App Router, React, TypeScript, TailwindCSS, PostgreSQL, Prisma ORM, NextAuth, and Zod.
+Track B internship assignment.
 
 ## Folder Structure
 
